@@ -7,8 +7,6 @@
 // @icon         https://i.imgur.com/u17jjYj.png
 // @license      MIT
 //
-// @updateURL    https://greasyfork.org/scripts/407284-imdb-scout-mod/code/IMDb%20Scout%20Mod.meta.js
-// @downloadURL  https://greasyfork.org/scripts/407284-imdb-scout-mod/code/IMDb%20Scout%20Mod.user.js
 // @homepage     https://github.com/Purfview/IMDb-Scout-Mod
 // @supportURL   https://github.com/Purfview/IMDb-Scout-Mod/issues
 //
@@ -907,13 +905,64 @@ The movie year (e.g. 1961).
 
 // Custom sites must be set to the 3rd/2nd search bar.
 var custom_sites = [
-  {   'name': 'Dummy',
+ {   'name': 'Dummy',
       'icon': 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAQAAAD9CzEMAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAADsSURBVHja3NhbFoMwCEVR5j9p+ltr4B7Io0v1L6nslGSZoLntve0IIK/kefWY+hUcZg8o5qIKNNLNgfaMCiBeWKNrjPzGs2GDDJ4xKVALHiLhHIjgcR8D0vAqdSMiAch0auIKlEYPCA7c2ynxDYDxk1bXAF05JJ1XpTR+Z4v5DvgLAfVyyHoXAF4D1ox/GtD/dwog6ZwA2GwtALwH2JLwzwfsr4BtAhovC3KEgTtaG4i2TJtIUbwn2wogP1UAgvUiwMoAOdnhs2kb2H66PlAfVCocr1c40zWa8yrT91aZR+rkA5U+Qdi3ip33ZwAb5/CcnuFpKAAAAABJRU5ErkJggg==',
       'searchUrl': 'https://dummy.dummy',
       'loggedOutRegex': /dummy/,
       'matchRegex': /dummy/,
-      'inThirdSearchBar': true,
+      'both': true},
+  
+  {   'name': 'my-TL-Title',
+      'searchUrl': 'https://www.torrentleech.org/torrents/browse/list/categories/8,9,11,12,13,14,15,29,34,35,36,37,43,47/query/%search_string_orig% %year%',
+      'goToUrl': 'https://www.torrentleech.org/torrents/browse/index/query/%search_string_orig% %year%/categories/8,9,11,12,13,14,15,29,34,35,36,37,43,47',
+      'loggedOutRegex': /Signup With Invite/,
+      'matchRegex': /"numFound":0/,
+      'rateLimit': 250,
+      'spaceEncode': '%2B'},
+  
+  {   'name': 'my-TL-Title',
+      'searchUrl': 'https://www.torrentleech.org/torrents/browse/list/categories/26,27,29,32,34,35,44/query/%search_string_orig%',
+      'goToUrl': 'https://www.torrentleech.org/torrents/browse/index/query/%search_string_orig%/categories/26,27,29,32,34,35,44',
+      'loggedOutRegex': /Signup With Invite/,
+      'matchRegex': /"numFound":0/,
+      'rateLimit': 250,
+      'spaceEncode': '%2B',
+      'TV': true},
+  
+  {   'name': 'my-RuT',
+      'searchUrl': 'https://rutracker.org/forum/tracker.php?nm=%search_string_orig%+%year%',
+      'loggedOutRegex': /Введите ваше имя|Форум временно отключен на профилактические работы до/,
+      'matchRegex': 'Не найдено'},
+  
+  {   'name': 'my-RuT',
+      'searchUrl': 'https://rutracker.org/forum/tracker.php?f=103,1102,1105,1114,1120,1214,1242,1248,1278,1280,1281,1288,1301,1327,1359,1363,1389,1391,1453,1459,1460,1463,1467,1468,1469,1475,1493,1498,1531,1537,1539,1574,1690,1803,193,1938,1939,1940,195,2076,2082,2104,2107,2110,2112,2123,2139,2159,2160,2163,2164,2166,2168,2169,2176,2177,2178,2323,235,2380,2412,242,249,2491,251,2535,2538,266,294,315,325,387,489,500,534,552,56,594,599,607,656,671,672,694,704,717,718,721,752,775,781,815,816,819,821,825,842,851,863,864,876,893,915,97,979,98&nm=%search_string_orig%',
+      'loggedOutRegex': /Введите ваше имя|Форум временно отключен на профилактические работы до/,
+      'matchRegex': 'Не найдено',
+      'TV': true},
+
+  {   'name': 'my-myduckisdead',
+      'searchUrl': 'https://myduckisdead.org/?s=%tt%',
+      'matchRegex': /If you want to rephrase your query, here is your chance:/,
+      'both': true},
+  
+  {   'name': 'my-vintageclassix',
+      'searchUrl': 'http://www.vintageclassix.com/search?q=%tt%',
+      'matchRegex': /No posts matching the query:/,
+      'both': true},
+  
+  {   'name': 'my-opensubtitles',
+      'searchUrl': 'https://www.opensubtitles.org/en/search/sublanguageid-eng/imdbid-%tt%',
+      'matchRegex': /<b>No results<\/b>/,
+      'loggedOutRegex':'Site will be online soon. We are doing some necessary backups and upgrades. Thanks for understanding.'|'Access denied; you need to login or register',
+      'both': true},
+ 
+  {  'name': 'my-opensubtitles.com',
+      'searchUrl': 'https://www.opensubtitles.com/en/en/search-all/q-%tt%/hearing_impaired-include/machine_translated-/trusted_sources-',
+      'matchRegex': /<h2 class="h2 col-md-12">No results found<\/h2>/,
+      'loggedOutRegex':'Site will be online soon. We are doing some necessary backups and upgrades. Thanks for understanding.'|'Access denied; you need to login or register',
       'both': true}
+];
+        
 ];
 
 var public_sites = [
